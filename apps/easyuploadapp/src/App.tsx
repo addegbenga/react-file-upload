@@ -6,6 +6,7 @@ export default function App() {
       console.log(props);
     },
     multiple: true,
+    
   });
 
   return (
