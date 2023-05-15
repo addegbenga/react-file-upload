@@ -34,18 +34,14 @@ export default function App() {
   return (
     <div>
       <div style={{ marginBottom: "5rem", textAlign: "center" }}>
-        <h1>React File Upload Showing Drag and drop and basic upload</h1>
+        <h1>React File Upload Basic demo </h1>
+        <p>You can make a pull request for improvement.</p>
       </div>
       <div>
         <div>
           <label>Upload File 1</label>
           <input
             type="file"
-            onDrop={(e) => [
-              e.preventDefault(),
-              e.stopPropagation(),
-              console.log(e),
-            ]}
             name="file"
             onChange={handleChange}
           />

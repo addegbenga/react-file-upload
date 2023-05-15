@@ -42,11 +42,6 @@ export default function App() {
           <label>Upload File 1</label>
           <input
             type="file"
-            onDrop={(e) => [
-              e.preventDefault(),
-              e.stopPropagation(),
-              console.log(e),
-            ]}
             name="file"
             onChange={handleChange}
           />
