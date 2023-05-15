@@ -4,7 +4,7 @@ export interface IUpload {
    */
   maxfileSize?: number;
   /**
-   * specify the number of file you want to accept.
+   * specify the number of file you want to accept This is dependent on if multiple is set to true.
    */
   maxFile?: number;
   fileType?: FileType[];
