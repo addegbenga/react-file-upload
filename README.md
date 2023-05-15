@@ -26,27 +26,42 @@ export default function App() {
     handleError(props) {
       console.log(props);
     },
+    fileType: ["image/png", "image/jpeg"],
     multiple: true,
-    //false by defaults
+    maxfileSize: 1500,
   });
 
   return (
     <div>
       <div>
+        <label>Upload File 100</label>
+        <input
+          accept=""
+          type="file"
+          name="file"
+          // onChange={(e) => console.log(e.target.files[0])}
+        />
+      </div>
+
+      <div>
         <label>Upload File 1</label>
         <input type="file" name="file" onChange={handleChange} />
         <div style={{ display: "flex", gap: 10 }}>
           {fileData?.file?.map((item, idx) => (
-            <img src={item} key={idx} width={200} height={200} />
+            <div style={{ display: "grid", gap: 10 }} key={idx}>
+              <img src={item?.blob} width={200} height={200} />
+              <span>{item.name}</span>
+            </div>
           ))}
         </div>
       </div>
+
       <div>
         <label>Upload File 2</label>
         <input type="file" name="file2" onChange={handleChange} />
         <div style={{ display: "flex", gap: 10 }}>
           {fileData?.file2?.map((item, idx) => (
-            <img src={item} key={idx} width={200} height={200} />
+            <img src={item.blob} key={idx} width={200} height={200} />
           ))}
         </div>
       </div>
@@ -54,24 +69,24 @@ export default function App() {
   );
 }
 
+
 ```
 
 ## Accepted Props
 
-|Types    | Description                                    |
-|----------- | ---------------------------------------------- |
-| maxfileSize | is an optional property that allows you to set the maximum size of a file in kilobytes. The default value is 200kb |
-| maxFile     | is an optional property that allows you to set the maximum number of files to be uploaded NB: This 1 by default and can be more than one if `multiple` is set to true. |
-| fileType    | is an optional property that accepts an array of strings representing file types to be accepted for upload.|
-| multiple    | is an optional boolean property that specifies whether a single or multiple files can be uploaded. The default value is false.|
-| handleError | is a required method that accepts a props object and handles any errors that may occur during the file upload process. |
-| handleChange | is an optional method that returns a FileList and allows you to manage the files on your own. |
+| Types        | Description                                                                                                                                                            |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| maxfileSize  | is an optional property that allows you to set the maximum size of a file in kilobytes. The default value is 200kb                                                     |
+| maxFile      | is an optional property that allows you to set the maximum number of files to be uploaded NB: This 1 by default and can be more than one if `multiple` is set to true. |
+| fileType     | is an optional property that accepts an array of strings representing file types to be accepted for upload.                                                            |
+| multiple     | is an optional boolean property that specifies whether a single or multiple files can be uploaded. The default value is false.                                         |
+| handleError  | is a required method that accepts a props object and handles any errors that may occur during the file upload process.                                                 |
+| handleChange | is an optional method that returns a FileList and allows you to manage the files on your own.                                                                          |
 
 ## Contributing
 
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
-
 
 ## License
 
