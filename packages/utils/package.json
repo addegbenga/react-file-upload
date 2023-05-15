@@ -2,7 +2,19 @@
   "name": "@dexpackage/react-upload",
   "private": false,
   "version": "0.1.0",
+  "author": "Adeyemi",
   "type": "module",
+  "description": "A simple-to-use React hook that enables HTML5-compliant drag-and-drop file uploads with preview functionality. This library streamlines the file upload process for your users, allowing them to see a preview of their files before uploading.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/addegbenga/react-file-upload"
+  },
+  "keywords": [
+    "react",
+    "library",
+    "react-upload"
+  ],
+  "homepage": "https://github.com/addegbenga/react-file-upload/blob/main/README.md",
   "main": "./dist/easyupload.cjs",
   "module": "./dist/easyupload.js",
   "types": "./dist/index.d.ts",

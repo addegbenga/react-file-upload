@@ -1,7 +1,11 @@
 {
   "name": "@dexpackage/monorepo",
   "version": "0.1.0",
-  "description": "",
+  "description": "A simple-to-use React hook that enables HTML5-compliant drag-and-drop file uploads with preview functionality. This library streamlines the file upload process for your users, allowing them to see a preview of their files before uploading.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/addegbenga/react-file-upload"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +14,11 @@
     "apps/*",
     "packages/*"
   ],
-  "keywords": [],
+  "keywords": [
+    "react",
+    "library",
+    "react-upload"
+  ],
   "author": "",
-  "license": "ISC"
+  "license": "MIT"
 }
