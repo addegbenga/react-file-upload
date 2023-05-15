@@ -7,19 +7,19 @@ A simple to use React hook that enables HTML5-compliant drag-and-drop file uploa
 Install it from npm and include it in your React build process (using Webpack, Browserify, etc).
 
 ```bash
-yarn add dex-react-upload
+yarn add dex-react-file-upload
 ```
 
 or
 
 ```bash
-npm i dex-react-upload
+npm i dex-react-file-upload
 ```
 
 ## Usage
 
 ```tsx
-import import { useUploadFile } from "dex-react-upload";
+import import { useUploadFile } from "dex-react-file-upload";
 
 export default function App() {
   const { handleChange, fileData } = useUploadFile({
