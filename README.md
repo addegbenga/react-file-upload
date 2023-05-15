@@ -32,17 +32,7 @@ export default function App() {
   });
 
   return (
-    <div>
-      <div>
-        <label>Upload File 100</label>
-        <input
-          accept=""
-          type="file"
-          name="file"
-          // onChange={(e) => console.log(e.target.files[0])}
-        />
-      </div>
-
+   <div>
       <div>
         <label>Upload File 1</label>
         <input type="file" name="file" onChange={handleChange} />
