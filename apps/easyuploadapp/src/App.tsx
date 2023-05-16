@@ -5,7 +5,7 @@ export default function App() {
     handleError(props) {
       console.log(props);
     },
-    multiple: true,
+    // multiple: true,
     maxFile: 4,
     maxfileSize: 1500, //in kb,
   });
