@@ -219,7 +219,7 @@ export const useUploadFile = ({
         const newData = handleParseData({
           blob: files,
           name: dataType,
-          data: result,
+          data: result[0],
         });
         handleMaxFileLimitError({
           fileState: newData,

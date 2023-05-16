@@ -19,7 +19,7 @@ npm i dex-react-file-upload
 ## Usage
 
 ```tsx
-import import { useUploadFile } from "dex-react-file-upload";
+import { useUploadFile } from "dex-react-file-upload";
 
 export default function App() {
   const { handleChange, fileData, handleOnDrop } = useUploadFile({
@@ -40,11 +40,7 @@ export default function App() {
       <div>
         <div>
           <label>Upload File 1</label>
-          <input
-            type="file"
-            name="file"
-            onChange={handleChange}
-          />
+          <input type="file" name="file" onChange={handleChange} />
           <div style={{ display: "flex", gap: 10 }}>
             {fileData?.file?.map((item, idx) => (
               <div style={{ display: "grid", gap: 10 }} key={idx}>
@@ -64,6 +60,7 @@ export default function App() {
           onDrop={handleOnDrop}
           onDragOver={(event) => event.preventDefault()}
         >
+          <label>Drag and Drop Example</label>
           {fileData?.file4 ? (
             <div style={{ display: "flex", justifyContent: "center", gap: 10 }}>
               {fileData?.file4?.map((item, idx) => (
@@ -99,9 +96,6 @@ export default function App() {
     </div>
   );
 }
-
-
-
 ```
 
 ## Accepted Props
