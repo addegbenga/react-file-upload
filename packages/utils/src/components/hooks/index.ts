@@ -34,13 +34,12 @@ export const useUploadFile = ({
     }
 
     //Check if the user specify a file type and run file type validation
-    if (props.fileType && props.fileType?.length !== 0) {
-      return handleFileTypeValidations({
-        fileType: props.fileType as any,
-        event: event,
-        handleError: props.handleError,
-      });
-    }
+
+    handleFileTypeValidations({
+      fileType: props.fileType as any,
+      event: event,
+      handleError: props.handleError,
+    });
 
     //Check for file size validation
     if (uploadedFileSizeInKb > maxfileSize) {
@@ -148,15 +147,6 @@ export const useUploadFile = ({
       props.handleChange(filelist);
     }
 
-    //Check if the user specify a file type and run file type validation
-    if (props.fileType && props.fileType?.length !== 0) {
-      handleFileTypeValidations({
-        fileType: props.fileType as any,
-        event: event as any,
-        handleError: props.handleError,
-      });
-    }
-
     const promises = fileArray.map((file) => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -207,6 +197,13 @@ export const useUploadFile = ({
             name: dataType,
             data: data,
           });
+          handleMaxFileLimitError({
+            fileState: newData,
+            handleError: props.handleError,
+            maxFile: props.maxFile as any,
+            name: dataType,
+          });
+
           setFiles(newData);
         } else {
           const newData = handleParseData({
@@ -214,6 +211,13 @@ export const useUploadFile = ({
             name: dataType,
             data: resolvedFiles,
           });
+          handleMaxFileLimitError({
+            fileState: newData,
+            handleError: props.handleError,
+            maxFile: props.maxFile as any,
+            name: dataType,
+          });
+
           setFiles(newData);
         }
       } else {
@@ -222,6 +226,13 @@ export const useUploadFile = ({
           name: dataType,
           data: [resolvedFiles[0]],
         });
+        handleMaxFileLimitError({
+          fileState: newData,
+          handleError: props.handleError,
+          maxFile: props.maxFile as any,
+          name: dataType,
+        });
+
         setFiles(newData);
       }
     } catch (error) {

@@ -7,8 +7,8 @@ export default function App() {
       alert(props.error.message);
     },
     multiple: true,
-    fileType: ["image/jpg", "image/jpeg"],
-    maxFile: 4,
+    fileType: ["image/jpg", "image/jpeg", "image/png"],
+    maxFile: 2,
     maxfileSize: 1500, //in kb,
   });
 
@@ -21,7 +21,7 @@ export default function App() {
       <div>
         <div>
           <label>Upload File 1</label>
-          <input type="file" onChange={handleChange} />
+          <input type="file" name="file" onChange={handleChange} />
           <div style={{ display: "flex", gap: 10 }}>
             {fileData?.file?.map((item, idx) => (
               <div style={{ display: "grid", gap: 10 }} key={idx}>

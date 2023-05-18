@@ -22,7 +22,7 @@ export function handleParseData(props: IParseType): IBlobReturnType {
 
 interface FileValidationType {
   fileType: FileType;
-  event: ChangeEvent<HTMLInputElement>;
+  event: ChangeEvent<HTMLInputElement> | any;
   handleError: (props: any) => void;
 }
 export const handleFileTypeValidations = ({
@@ -30,14 +30,21 @@ export const handleFileTypeValidations = ({
   event,
   handleError,
 }: FileValidationType) => {
-  const evt = event?.target?.files ? event?.target.files[0]?.type : "";
-  if (!fileType.includes(evt)) {
-    return handleError({
-      error: {
-        message: "Invalid file Type",
-        fileTypes: fileType,
-      },
-    });
+  try {
+    const evt = event?.target?.files[0].type;
+
+    if (fileType && fileType?.length !== 0 && !fileType.includes(evt)) {
+      handleError({
+        error: {
+          message: "Invalid file Type",
+          fileTypes: fileType,
+        },
+      });
+      throw Error("Invalid file Type");
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
 
@@ -49,12 +56,18 @@ interface MaxFileValidationType {
 }
 
 export const handleMaxFileLimitError = (props: MaxFileValidationType) => {
-  if (props.maxFile && props.fileState[props.name].length > props.maxFile) {
-    return props.handleError({
-      error: {
-        message: "Exceeded File Limit",
-        limit: props.maxFile,
-      },
-    });
+  try {
+    if (props.maxFile && props.fileState[props.name].length > props.maxFile) {
+      props.handleError({
+        error: {
+          message: "Exceeded File Limit",
+          limit: props.maxFile,
+        },
+      });
+      throw Error("Exceeded File Limit");
+    }
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
