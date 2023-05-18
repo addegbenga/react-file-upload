@@ -22,11 +22,13 @@ npm i dex-react-file-upload
 import { useUploadFile } from "dex-react-file-upload";
 
 export default function App() {
-  const { handleChange, fileData, handleOnDrop } = useUploadFile({
-    handleError(props) {
+  const { handleChange, fileData, handleOnDrop, setFiles } = useUploadFile({
+    handleError(props: any) {
       console.log(props);
+      alert(props.error.message);
     },
     multiple: true,
+    fileType: ["image/jpg", "image/jpeg"],
     maxFile: 4,
     maxfileSize: 1500, //in kb,
   });
@@ -108,6 +110,21 @@ export default function App() {
 | multiple     | is an optional boolean property that specifies whether a single or multiple files can be uploaded. The default value is false.                                              |
 | handleError  | is a required method that accepts a props object and handles any errors that may occur during the file upload process.                                                      |
 | handleChange | is an optional method that returns a FileList and allows you to manage the files on your own.                                                                               |
+
+## Returned Props
+
+| Types        | Description                                                                                                               |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| handleChange | a function used to handle file inputs onChange                                                                            |
+| handleOnDrop | This function is used to handle onDrop can be used on the drop zone elements.                                             |
+| setFiles     | This is a state setter used to manage state internally, you can use this function to set and modify the `fileData` state. |
+| fileData     | This is a state property that contains all the state objects.                                                             |
+
+## Improvements
+
+1. Improved Error handling
+2. Return setFiles hook to manage state values
+3. Improved validation for drag and drop images.
 
 ## Contributing
 

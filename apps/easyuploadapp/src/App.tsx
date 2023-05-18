@@ -1,11 +1,13 @@
 import { useUploadFile } from "@dexpackage/easyupload";
 
 export default function App() {
-  const { handleChange, fileData, handleOnDrop } = useUploadFile({
-    handleError(props) {
+  const { handleChange, fileData, handleOnDrop, setFiles } = useUploadFile({
+    handleError(props: any) {
       console.log(props);
+      alert(props.error.message);
     },
-    // multiple: true,
+    multiple: true,
+    fileType: ["image/jpg", "image/jpeg"],
     maxFile: 4,
     maxfileSize: 1500, //in kb,
   });
@@ -19,7 +21,7 @@ export default function App() {
       <div>
         <div>
           <label>Upload File 1</label>
-          <input type="file" name="file" onChange={handleChange} />
+          <input type="file" onChange={handleChange} />
           <div style={{ display: "flex", gap: 10 }}>
             {fileData?.file?.map((item, idx) => (
               <div style={{ display: "grid", gap: 10 }} key={idx}>

@@ -32,13 +32,12 @@ export const handleFileTypeValidations = ({
 }: FileValidationType) => {
   const evt = event?.target?.files ? event?.target.files[0]?.type : "";
   if (!fileType.includes(evt)) {
-    handleError({
+    return handleError({
       error: {
         message: "Invalid file Type",
         fileTypes: fileType,
       },
     });
-    throw new Error("Error: invalid file type");
   }
 };
 
@@ -51,12 +50,11 @@ interface MaxFileValidationType {
 
 export const handleMaxFileLimitError = (props: MaxFileValidationType) => {
   if (props.maxFile && props.fileState[props.name].length > props.maxFile) {
-    props.handleError({
+    return props.handleError({
       error: {
         message: "Exceeded File Limit",
         limit: props.maxFile,
       },
     });
-    throw new Error("Error: Exceeded File Limit");
   }
 };
