@@ -16,7 +16,6 @@ export function handleParseData(props: IParseType): IBlobReturnType {
     ...JSON.parse(JSON.stringify(props.blob)),
     [props.name]: props.data,
   };
-
   return newData;
 }
 
@@ -27,24 +26,18 @@ interface FileValidationType {
 }
 export const handleFileTypeValidations = ({
   fileType,
-  event,
   handleError,
 }: FileValidationType) => {
   try {
-    const evt = event?.target?.files[0].type;
-
-    if (fileType && fileType?.length !== 0 && !fileType.includes(evt)) {
-      handleError({
-        error: {
-          message: "Invalid file Type",
-          fileTypes: fileType,
-        },
-      });
-      throw Error("Invalid file Type");
-    }
+    handleError({
+      error: {
+        message: "Invalid file Type",
+        fileTypes: fileType,
+      },
+    });
+    throw new Error("Invalid file Type");
   } catch (error) {
-    console.log(error);
-    throw error;
+    console.error(error);
   }
 };
 
@@ -57,17 +50,33 @@ interface MaxFileValidationType {
 
 export const handleMaxFileLimitError = (props: MaxFileValidationType) => {
   try {
-    if (props.maxFile && props.fileState[props.name].length > props.maxFile) {
-      props.handleError({
-        error: {
-          message: "Exceeded File Limit",
-          limit: props.maxFile,
-        },
-      });
-      throw Error("Exceeded File Limit");
-    }
+    props.handleError({
+      error: {
+        message: "Exceeded File Limit",
+        limit: props.maxFile,
+      },
+    });
+
+    throw Error("Exceeded File Limit");
   } catch (error) {
     console.log(error);
-    throw error;
+  }
+};
+
+interface IGenericErrorType {
+  message: string;
+  handleError: (props: any) => void;
+}
+
+export const handleGenericError = (props: IGenericErrorType) => {
+  try {
+    props.handleError({
+      error: {
+        message: props.message,
+      },
+    });
+    throw Error(props.message);
+  } catch (error) {
+    console.log(error);
   }
 };

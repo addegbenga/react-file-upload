@@ -111,7 +111,7 @@ export default function App() {
 | handleError  | is a required method that accepts a props object and handles any errors that may occur during the file upload process.                                                      |
 | handleChange | is an optional method that returns a FileList and allows you to manage the files on your own.                                                                               |
 
-## Returned Props
+## API
 
 | Types        | Description                                                                                                               |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------- |
@@ -120,11 +120,9 @@ export default function App() {
 | setFiles     | This is a state setter used to manage state internally, you can use this function to set and modify the `fileData` state. |
 | fileData     | This is a state property that contains all the state objects.                                                             |
 
-## Improvements
+## Bug Fixes
 
-1. Improved Error handling
-2. Return setFiles hook to manage state values
-3. Improved validation for drag and drop images.
+1. Allow uploading the same file twice across browsers for multiple upload.
 
 ## Contributing
 

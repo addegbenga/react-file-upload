@@ -3,6 +3,7 @@ import { IUpload, IBlobReturnType } from "../types/types";
 import {
   convertBytesToKB,
   handleFileTypeValidations,
+  handleGenericError,
   handleMaxFileLimitError,
   handleParseData,
 } from "../utils";
@@ -17,38 +18,33 @@ export const useUploadFile = ({
     const reader = new FileReader();
     const filelist = event.target.files as FileList;
     const uploadedFileSizeInKb = Number(convertBytesToKB(filelist[0].size));
-    // const isImage = filelist[0].type.split("/")[0] === "image" ? true : false;
 
     //Check of the form input has a name attribute
     if (!event.target.name) {
-      return props.handleError({
-        error: {
-          message: "Add a name attribute to the input ",
-        },
+      return handleGenericError({
+        message: "Add a name attribute to the input ",
+        handleError: props.handleError,
       });
     }
+
+    //Check if the user specify a file type and run file type validation
+    if (props.fileType && !props.fileType.includes(filelist[0].type as any))
+      return handleFileTypeValidations({
+        fileType: props.fileType as any,
+        event: event,
+        handleError: props.handleError,
+      });
 
     //override all errors and let users handle it themselves.
     if (props.handleChange) {
       props.handleChange(filelist);
     }
 
-    //Check if the user specify a file type and run file type validation
-
-    handleFileTypeValidations({
-      fileType: props.fileType as any,
-      event: event,
-      handleError: props.handleError,
-    });
-
     //Check for file size validation
     if (uploadedFileSizeInKb > maxfileSize) {
-      return props.handleError({
-        error: {
-          message: "File too large",
-          uploadedFileSizeInKb: uploadedFileSizeInKb,
-          expectedFileSizeInKb: maxfileSize,
-        },
+      return handleGenericError({
+        message: "File too large",
+        handleError: props.handleError,
       });
     }
 
@@ -57,6 +53,7 @@ export const useUploadFile = ({
     reader.onload = () => {
       if (multiple) {
         const propertyValue = files?.[event.target.name];
+
         if (propertyValue) {
           const data = [
             ...files[event.target.name],
@@ -66,19 +63,26 @@ export const useUploadFile = ({
               fileSize: Number(convertBytesToKB(filelist[0].size)),
             },
           ];
+
           const newData = handleParseData({
             blob: files,
             name: event.target.name,
             data: data,
           });
-          handleMaxFileLimitError({
-            fileState: newData,
-            handleError: props.handleError,
-            maxFile: props.maxFile as any,
-            name: event.target.name,
-          });
 
+          if (
+            props.maxFile &&
+            newData[event.target.name].length > props.maxFile
+          ) {
+            return handleMaxFileLimitError({
+              fileState: newData,
+              handleError: props.handleError,
+              maxFile: props.maxFile as any,
+              name: event.target.name,
+            });
+          }
           setFiles(newData);
+          event.target.value = "";
         } else {
           const newData = handleParseData({
             blob: files,
@@ -91,14 +95,20 @@ export const useUploadFile = ({
               },
             ],
           });
-          handleMaxFileLimitError({
-            fileState: newData,
-            handleError: props.handleError,
-            maxFile: props.maxFile as any,
-            name: event.target.name,
-          });
 
+          if (
+            props.maxFile &&
+            newData[event.target.name].length > props.maxFile
+          ) {
+            return handleMaxFileLimitError({
+              fileState: newData,
+              handleError: props.handleError,
+              maxFile: props.maxFile as any,
+              name: event.target.name,
+            });
+          }
           setFiles(newData);
+          event.target.value = "";
         }
       } else {
         const newData = handleParseData({
@@ -112,26 +122,30 @@ export const useUploadFile = ({
             },
           ],
         });
-        handleMaxFileLimitError({
-          fileState: newData,
-          handleError: props.handleError,
-          maxFile: props.maxFile as any,
-          name: event.target.name,
-        });
-
+        if (
+          props.maxFile &&
+          newData[event.target.name].length > props.maxFile
+        ) {
+          return handleMaxFileLimitError({
+            fileState: newData,
+            handleError: props.handleError,
+            maxFile: props.maxFile as any,
+            name: event.target.name,
+          });
+        }
         setFiles(newData);
+        event.target.value = "";
       }
     };
+
     return event;
   };
 
   const handleOnDrop = async (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     const dataType = event.currentTarget.getAttribute("data-type");
-
     const filelist = event.dataTransfer.files;
     const fileArray = Array.from(filelist);
-    // const uploadedFileSizeInKb = Number(convertBytesToKB(filelist[0].size));
 
     //Check if the drop zone have a data-type attribute
     if (!dataType) {
@@ -158,7 +172,17 @@ export const useUploadFile = ({
               expectedFileSizeInKb: maxfileSize,
             },
           });
-          reject(new Error("File size exceeds the maximum limit."));
+          reject(new Error("File too large"));
+          return; // Skip processing for this file and continue to the next iteration
+        }
+        //Check if the user specify a file type and run file type validation
+        if (props.fileType && !props.fileType.includes(file.type as any)) {
+          handleFileTypeValidations({
+            fileType: props.fileType as any,
+            event: event,
+            handleError: props.handleError,
+          });
+          reject(new Error("Invalid file type"));
           return; // Skip processing for this file and continue to the next iteration
         }
         reader.onload = () => {
@@ -197,12 +221,14 @@ export const useUploadFile = ({
             name: dataType,
             data: data,
           });
-          handleMaxFileLimitError({
-            fileState: newData,
-            handleError: props.handleError,
-            maxFile: props.maxFile as any,
-            name: dataType,
-          });
+          if (props.maxFile && newData[dataType].length > props.maxFile) {
+            return handleMaxFileLimitError({
+              fileState: newData,
+              handleError: props.handleError,
+              maxFile: props.maxFile as any,
+              name: dataType,
+            });
+          }
 
           setFiles(newData);
         } else {
@@ -211,13 +237,14 @@ export const useUploadFile = ({
             name: dataType,
             data: resolvedFiles,
           });
-          handleMaxFileLimitError({
-            fileState: newData,
-            handleError: props.handleError,
-            maxFile: props.maxFile as any,
-            name: dataType,
-          });
-
+          if (props.maxFile && newData[dataType].length > props.maxFile) {
+            return handleMaxFileLimitError({
+              fileState: newData,
+              handleError: props.handleError,
+              maxFile: props.maxFile as any,
+              name: dataType,
+            });
+          }
           setFiles(newData);
         }
       } else {
@@ -226,18 +253,18 @@ export const useUploadFile = ({
           name: dataType,
           data: [resolvedFiles[0]],
         });
-        handleMaxFileLimitError({
-          fileState: newData,
-          handleError: props.handleError,
-          maxFile: props.maxFile as any,
-          name: dataType,
-        });
-
+        if (props.maxFile && newData[dataType].length > props.maxFile) {
+          return handleMaxFileLimitError({
+            fileState: newData,
+            handleError: props.handleError,
+            maxFile: props.maxFile as any,
+            name: dataType,
+          });
+        }
         setFiles(newData);
       }
     } catch (error) {
       console.error();
-      return Promise.reject(error);
     }
     return event;
   };

@@ -4,12 +4,11 @@ export default function App() {
   const { handleChange, fileData, handleOnDrop, setFiles } = useUploadFile({
     handleError(props: any) {
       console.log(props);
-      alert(props.error.message);
     },
     multiple: true,
-    fileType: ["image/jpg", "image/jpeg", "image/png"],
-    maxFile: 2,
-    maxfileSize: 1500, //in kb,
+    fileType: ["image/png", "image/jpeg"],
+    maxFile: 10,
+    maxfileSize: 1000, //in kb,
   });
 
   return (
