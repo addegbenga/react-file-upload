@@ -16,7 +16,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: v16.14
+          node-version: v18
 
       - name: Install pnpm
         run: npm install -g pnpm
