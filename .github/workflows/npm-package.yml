@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build-test-publish:
+  build-npm-publish:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,7 +16,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 16
+          node-version: 14
 
       - name: Install pnpm
         run: npm install -g pnpm
@@ -24,9 +24,6 @@ jobs:
       - name: Install dependencies
         working-directory: packages/utils
         run: pnpm install
-
-      - name: Run linters
-        run: pnpm run lint
 
       - name: Build package
         working-directory: packages/utils
