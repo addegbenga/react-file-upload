@@ -1,5 +1,16 @@
 {
-  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "packages": [
+    "apps/",
+    "packages/*"
+  ],
   "useWorkspaces": true,
-  "version": "1.0.3"
+  "version": "1.0.3",
+  "ignoreChanges": [
+    "**/CHANGELOG.md",
+    "**/package-lock.json",
+    "**/test/**",
+    "lerna.json",
+    "package.json",
+    "README.md"
+  ]
 }

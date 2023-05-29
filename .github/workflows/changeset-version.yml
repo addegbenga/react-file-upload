@@ -18,25 +18,24 @@ jobs:
         with:
           node-version: "lts/*"
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - name: Set up NPM credentials
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+      - name: Install Lerna
+        run: npm install -g lerna
 
       - name: Install dependencies
         working-directory: packages/utils
         run: pnpm install
 
-      - name: Determine release type
-        id: get_commit_message
-        run: echo "::set-output name=commit_message::$(git log --format=%B -n 1 ${{ github.sha }})"
-
-      - name: Version package
+      - name: Lerna version
         working-directory: packages/utils
-        env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: node ../../versioning.js "${{ steps.get_commit_message.outputs.commit_message }}"
+        run: lerna version --force-publish --exact --no-git-tag-version --no-push
 
       - name: Publish package
         working-directory: packages/utils
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        run: pnpm publish --no-git-checks
+        run: pnpm publish
