@@ -25,13 +25,9 @@ jobs:
         working-directory: packages/utils
         run: pnpm install
 
-      - name: Build package
-        working-directory: packages/utils
-        run: pnpm run build
-
       - name: Determine release type
         id: get_commit_message
-        run: echo "::set-output name=commit_message::${{ github.event.head_commit.message }}"
+        run: echo "::set-output name=commit_message::$(git log --format=%B -n 1 ${{ github.sha }})"
 
       - name: Version package
         working-directory: packages/utils
