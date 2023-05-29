@@ -29,11 +29,15 @@ jobs:
         working-directory: packages/utils
         run: pnpm run build
 
+      - name: Determine release type
+        id: determine_release_type
+        run: echo "::set-output name=release_type::${{ steps.get_commit_message.outputs.release_type }}"
+
       - name: Version package
         working-directory: packages/utils
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }} # Add this line to set the GH_TOKEN environment variable
-        run: npx semantic-release
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: node versioning.js "${{ steps.get_commit_message.outputs.commit_message }}"
 
       - name: Publish package
         working-directory: packages/utils

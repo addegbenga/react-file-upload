@@ -33,22 +33,6 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "release": {
-    "extends": "@semantic-release/npm",
-    "plugins": [
-      "@semantic-release/changelog",
-      [
-        "@semantic-release/git",
-        {
-          "assets": [
-            "CHANGELOG.md",
-            "package.json"
-          ],
-          "message": "chore(release): ${nextRelease.version}\n\n${nextRelease.notes}"
-        }
-      ]
-    ]
-  },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/git": "^10.0.1",
@@ -64,6 +48,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "semantic-release": "^21.0.2",
+    "semver": "^7.5.1",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
     "vite-plugin-dts": "^2.3.0"
