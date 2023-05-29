@@ -29,7 +29,7 @@ jobs:
         id: get_commit_message
         run: echo "::set-output name=commit_message::$(git log --format=%B -n 1 ${{ github.sha }})"
 
-      - name: Print Secrets
+      - name: Print Secretss
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
         run: |
