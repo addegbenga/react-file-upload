@@ -29,6 +29,9 @@ jobs:
         id: get_commit_message
         run: echo "::set-output name=commit_message::$(git log --format=%B -n 1 ${{ github.sha }})"
 
+      - name: Print commit message
+        run: echo "${{ steps.get_commit_message.outputs.commit_message }}"
+
       - name: Version package
         working-directory: packages/utils
         env:
