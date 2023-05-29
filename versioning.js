@@ -1,5 +1,6 @@
 const fs = require("fs");
 const semver = require("semver");
+
 // Read the current version from package.json
 const packageJson = fs.readFileSync("./package.json");
 const { version } = JSON.parse(packageJson);
@@ -8,7 +9,7 @@ const { version } = JSON.parse(packageJson);
 const commitMessage = process.argv[2];
 
 // Extract the release type from the commit message
-const releaseTypeMatch = commitMessage.match(/^(patch|minor|major):\s*(.*)/);
+const releaseTypeMatch = commitMessage.match(/^(\w+):\s*(.*)/);
 
 const releaseType = releaseTypeMatch ? releaseTypeMatch[1] : null;
 
