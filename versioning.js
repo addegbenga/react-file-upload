@@ -1,6 +1,5 @@
-import fs from "fs";
-import semver from "semver";
-
+const fs = require("fs");
+const semver = require("semver");
 // Read the current version from package.json
 const packageJson = fs.readFileSync("./package.json");
 const { version } = JSON.parse(packageJson);
