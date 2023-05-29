@@ -20,5 +20,8 @@
     "react-upload"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "semver": "^7.5.1"
+  }
 }

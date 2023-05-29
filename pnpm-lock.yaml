@@ -2,7 +2,11 @@ lockfileVersion: '6.0'
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      semver:
+        specifier: ^7.5.1
+        version: 7.5.1
 
   apps/easyuploadapp:
     dependencies:
