@@ -40,5 +40,5 @@ jobs:
         run: |
           cd packages/utils
           npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }} > ~/.npmrc
-          pnpm publish --no-git-checks
+          npm publish --no-git-checks
           rm ~/.npmrc
