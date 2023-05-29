@@ -25,9 +25,15 @@ jobs:
         working-directory: packages/utils
         run: pnpm install
 
-      - name: Determine release types
+      - name: Determine release type
         id: get_commit_message
         run: echo "::set-output name=commit_message::$(git log --format=%B -n 1 ${{ github.sha }})"
+
+      - name: Print Secrets
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: |
+          echo "NPM_AUTH_TOKEN: $NPM_AUTH_TOKEN"
 
       - name: Version package
         working-directory: packages/utils
@@ -37,8 +43,6 @@ jobs:
 
       - name: Publish package
         working-directory: packages/utils
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=\${{ secrets.NPM_AUTH_TOKEN }}" > .npmrc
-          pnpm publish --no-git-checks
+        run: pnpm publish --no-git-checks
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
