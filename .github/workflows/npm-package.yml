@@ -29,12 +29,6 @@ jobs:
         id: get_commit_message
         run: echo "::set-output name=commit_message::$(git log --format=%B -n 1 ${{ github.sha }})"
 
-      - name: Print Secretss
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-        run: |
-          echo "NPM_AUTH_TOKEN: $NPM_AUTH_TOKEN"
-
       - name: Version package
         working-directory: packages/utils
         env:
@@ -43,6 +37,7 @@ jobs:
 
       - name: Publish package
         working-directory: packages/utils
-        run: pnpm publish --no-git-checks
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: |
+          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }} > ~/.npmrc
+          pnpm publish --no-git-checks
+          rm ~/.npmrc
