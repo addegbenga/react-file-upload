@@ -38,7 +38,6 @@ jobs:
       - name: Publish package
         working-directory: packages/utils
         run: |
-          cd packages/utils
           npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }} > ~/.npmrc
           npm publish --no-git-checks
           rm ~/.npmrc
