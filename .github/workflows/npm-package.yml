@@ -37,7 +37,7 @@ jobs:
         working-directory: packages/utils
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: node ../versioning.js "${{ steps.get_commit_message.outputs.commit_message }}"
+        run: node ../../versioning.js "${{ steps.get_commit_message.outputs.commit_message }}"
 
       - name: Publish package
         working-directory: packages/utils
