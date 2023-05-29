@@ -13,10 +13,17 @@ export default defineConfig({
       name: "EasyUpload",
       // the proper extensions will be added
       formats: ["cjs", "umd", "es", "iife"],
-      fileName: "easyupload",
+      fileName: (format) => `easyupload.${format}.js`,
     },
     rollupOptions: {
       external: ["react", "react-dom"],
+      output: {
+        // Modify the UMD globals to match your package dependencies
+        globals: {
+          react: "React",
+          "react-dom": "ReactDOM",
+        },
+      },
     },
   },
 });
