@@ -16,7 +16,7 @@ const commitMessageText = releaseTypeMatch ? releaseTypeMatch[2] : null;
 // Check if a valid release type and commit message are provided
 if (!releaseType || !commitMessageText) {
   console.error(
-    'Invalid commit message format. Please use the format "<release-type>: <commit-message>".'
+    'Invalid commit message format. Please use the format "<release-type>: <commit-message>"'
   );
   process.exit(1);
 }
