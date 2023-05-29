@@ -31,6 +31,8 @@ jobs:
 
       - name: Version package
         working-directory: packages/utils
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }} # Add this line to set the GH_TOKEN environment variable
         run: npx semantic-release
 
       - name: Publish package
