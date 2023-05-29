@@ -2,7 +2,7 @@ import fs from "fs";
 import semver from "semver";
 
 // Read the current version from package.json
-const packageJson: any = fs.readFileSync("./package.json");
+const packageJson = fs.readFileSync("./package.json");
 const { version } = JSON.parse(packageJson);
 
 // Get the commit message from the command line argument
