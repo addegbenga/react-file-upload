@@ -4,7 +4,10 @@
     "packages/*"
   ],
   "useWorkspaces": true,
-  "version": "1.0.3",
+  "version": {
+    "conventionalCommits": true,
+    "message": "chore(release): :tada: :rocket: [skip ci]"
+  },
   "ignoreChanges": [
     "**/CHANGELOG.md",
     "**/package-lock.json",
