@@ -30,8 +30,8 @@ jobs:
         run: pnpm run build
 
       - name: Determine release type
-        id: determine_release_type
-        run: echo "::set-output name=release_type::${{ steps.get_commit_message.outputs.release_type }}"
+        id: get_commit_message
+        run: echo "::set-output name=commit_message::${{ github.event.head_commit.message }}"
 
       - name: Version package
         working-directory: packages/utils
