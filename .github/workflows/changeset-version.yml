@@ -18,6 +18,9 @@ jobs:
         with:
           node-version: "lts/*"
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Set up NPM credentials
         run: echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > ~/.npmrc
         env:
