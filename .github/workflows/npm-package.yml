@@ -25,7 +25,7 @@ jobs:
         working-directory: packages/utils
         run: pnpm install
 
-      - name: Determine release type
+      - name: Determine release types
         id: get_commit_message
         run: echo "::set-output name=commit_message::$(git log --format=%B -n 1 ${{ github.sha }})"
 
@@ -37,6 +37,6 @@ jobs:
 
       - name: Publish package
         working-directory: packages/utils
-        run: |
-          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }}
-          npm publish --no-git-checks
+        run: pnpm publish --no-git-checks
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
