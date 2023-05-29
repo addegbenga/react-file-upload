@@ -37,7 +37,6 @@ jobs:
 
       - name: Publish package
         working-directory: packages/utils
-        run: |
-          npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_AUTH_TOKEN }} > ~/.npmrc
-          npm publish --no-git-checks
-          rm ~/.npmrc
+        env:
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+        run: pnpm publish --no-git-checks
