@@ -29,9 +29,6 @@ jobs:
         id: get_commit_message
         run: echo "::set-output name=commit_message::$(git log --format=%B -n 1 ${{ github.sha }})"
 
-      - name: Print commit messages
-        run: echo "${{ steps.get_commit_message.outputs.commit_message }}"
-
       - name: Version package
         working-directory: packages/utils
         env:
@@ -40,6 +37,6 @@ jobs:
 
       - name: Publish package
         working-directory: packages/utils
-        run: pnpm publish
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
